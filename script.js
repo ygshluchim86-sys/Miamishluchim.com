@@ -112,6 +112,7 @@ function showDonationInfo() {
     const cashAppLink = 'https://cash.app/$MMendelMarkel';
     const zelleLink = 'https://www.zellepay.com/';
     const venmoLink = 'https://venmo.com/code?user_id=4344283796604636665&created=1761083061';
+    const paypalLink = 'https://www.paypal.com/paypalme/2485069099';
     
     // Create modal overlay
     const modal = document.createElement('div');
@@ -175,6 +176,7 @@ function showDonationInfo() {
             height: 24px;
             margin-right: 12px;
             vertical-align: middle;
+            filter: brightness(0) invert(1);
         }
         @media (max-width: 480px) {
             .donation-link {
@@ -189,10 +191,12 @@ function showDonationInfo() {
         }
         .cashapp { background: #00D632; }
         .cashapp:hover { background: #00B82A; }
-        .zelle { background: #6C1EB5; }
-        .zelle:hover { background: #5A1A9A; }
+        .zelle { background: #6C1EB5; color: white; }
+        .zelle:hover { background: #5A1A9A; color: white; }
         .venmo { background: #3D95CE; }
         .venmo:hover { background: #2E7BB8; }
+        .paypal { background: #0070BA; }
+        .paypal:hover { background: #005EA6; }
         .close-btn {
             position: absolute;
             top: 15px;
@@ -227,6 +231,10 @@ function showDonationInfo() {
         <a href="${venmoLink}" target="_blank" class="donation-link venmo">
             <img src="idJSeSAGuH_1761083556509.png" alt="Venmo">
             Venmo: @MenachemMendel-Markel
+        </a>
+        <a href="${paypalLink}" target="_blank" class="donation-link paypal">
+            <span style="font-weight: bold; font-size: 18px; margin-right: 10px;">P</span>
+            PayPal: 2485069099
         </a>
     `;
     
