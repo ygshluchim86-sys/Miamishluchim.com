@@ -133,14 +133,15 @@ function showDonationInfo() {
     const modalContent = document.createElement('div');
     modalContent.style.cssText = `
         background: white;
-        padding: 30px;
+        padding: 25px;
         border-radius: 20px;
         box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
         max-width: 400px;
-        width: 90%;
+        width: 95%;
         text-align: center;
         position: relative;
         animation: slideIn 0.3s ease-out;
+        margin: 20px;
     `;
     
     // Add CSS animation
@@ -152,17 +153,39 @@ function showDonationInfo() {
         }
         .donation-link {
             display: block;
-            margin: 15px 0;
-            padding: 15px 20px;
+            margin: 12px 0;
+            padding: 18px 20px;
             color: white;
             text-decoration: none;
             border-radius: 25px;
             transition: all 0.3s ease;
             font-weight: 600;
+            font-size: 16px;
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
         .donation-link:hover {
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .donation-link img {
+            height: 24px;
+            margin-right: 12px;
+            vertical-align: middle;
+        }
+        @media (max-width: 480px) {
+            .donation-link {
+                padding: 16px 15px;
+                font-size: 15px;
+                margin: 10px 0;
+            }
+            .donation-link img {
+                height: 22px;
+                margin-right: 10px;
+            }
         }
         .cashapp { background: #00D632; }
         .cashapp:hover { background: #00B82A; }
@@ -194,15 +217,15 @@ function showDonationInfo() {
             <p style="margin: 10px 0;">For now, you can donate using:</p>
         </div>
         <a href="${cashAppLink}" target="_blank" class="donation-link cashapp">
-            <img src="cashapp-svgrepo-com.svg" alt="CashApp" style="height: 20px; margin-right: 10px; vertical-align: middle;">
+            <img src="cashapp-svgrepo-com.svg" alt="CashApp">
             CashApp: $MMendelMarkel
         </a>
         <a href="${zelleLink}" target="_blank" class="donation-link zelle">
-            <img src="Zelle®_id9eOrSaCY_0.svg" alt="Zelle" style="height: 20px; margin-right: 10px; vertical-align: middle;">
+            <img src="Zelle®_id9eOrSaCY_0.svg" alt="Zelle">
             Zelle: 347-220-5998
         </a>
         <a href="${venmoLink}" target="_blank" class="donation-link venmo">
-            <img src="idJSeSAGuH_1761083556509.png" alt="Venmo" style="height: 20px; margin-right: 10px; vertical-align: middle;">
+            <img src="idJSeSAGuH_1761083556509.png" alt="Venmo">
             Venmo: @MenachemMendel-Markel
         </a>
     `;
