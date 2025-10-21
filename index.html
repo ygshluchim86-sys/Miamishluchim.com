@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yeshiva Gedolah Miami Shluchim</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://js.stripe.com/v3/"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <a href="#home" class="nav-logo-link"><h1>Shluchim To YG Miami</h1></a>
+            </div>
+            <div class="nav-menu" id="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#programs" class="nav-link">Programs</a>
+                <a href="#contact" class="nav-link">Contact</a>
+                <button class="donate-btn nav-donate" onclick="handleDonate()">Donate</button>
+            </div>
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    Yeshiva Gedolah
+                    <span class="hero-title-accent">Miami Shluchim</span>
+                </h1>
+                <p class="hero-description">
+                    Over 50 years of Torah, leadership, and the Rebbe’s first shluchim in America.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-secondary" onclick="handleDonate()">
+                        <span class="btn-icon">♥</span>
+                        Donate Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-content">
+                    <h2 class="section-title">About Our Yeshiva</h2>
+                    <div class="about-text">
+                        <p>
+                            Over 50 years ago, the Rebbe established the yeshiva in Miami, appointing Rabbi Yehuda Leib Schapiro as Rosh Yeshiva and selecting the founding group of 11 students. What began in a small apartment and courtyard shed soon grew into the educational complex on Alton Road.
+                        </p>
+                        <p>
+                            The yeshiva quickly became the heart of Chabad in South Florida, drawing people to regular Torah study and chavrusa learning. It was also the first place in America where the Rebbe sent shluchim, sparking the growth of Chabad throughout the region and beyond.
+                        </p>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <div class="image-container">
+                        <img src="Therebbe.jpg" alt="The Lubavitcher Rebbe" class="rebbe-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What We Do Section -->
+    <section id="programs" class="programs">
+        <div class="container">
+            <div class="programs-header">
+                <h2 class="section-title">What We Do</h2>
+                <p class="section-description">
+                    Our comprehensive programs are designed to develop well-rounded Torah scholars 
+                    and community leaders.
+                </p>
+            </div>
+            
+            <div class="features">
+                <div class="feature-row">
+                    <div class="feature-image">
+                        <div class="image-container">
+                            <img src="Mivtzoyim.jpg" alt="Mivtzoyim in South Florida" class="feature-photo">
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Mivtzoyim</h3>
+                        <p class="feature-text">
+                            Every week, the shluchim arrange that each and every Bochur goes out on mivtzoyim, reaching hundreds of Jews across South Florida. Whether it’s helping a fellow Jew put on tefillin or sharing words of Torah, these activities bring the Rebbe’s vision of spreading Yiddishkeit to life, far beyond the walls of the yeshiva.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-image">
+                        <div class="image-container">
+                            <img src="MivtzahTorah.JPG" alt="Mivtzah Torah learning" class="feature-photo">
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Mivtzah Torah</h3>
+                        <p class="feature-text">
+                            The Rebbe strongly encouraged bochurim to “koch in lernen Gemara,” to be deeply immersed in Torah study. Through Mivtzah Torah, the shluchim work with bochurim to strengthen their commitment to Gemara learning, in line with the Rebbe’s vision for true yeshiva life.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-row">
+                    <div class="feature-image">
+                        <div class="image-container">
+                            <img src="SederSichosJPG.JPG" alt="Seder Sichos gathering" class="feature-photo">
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Seder Sichos</h3>
+                        <p class="feature-text">
+                            The shluchim arrange regular Seder Sichos, where bochurim gather to learn and review the Rebbe’s sichos together. These sessions strengthen their connection to the Rebbe, offering inspiration, perspective, and a deeper understanding of the Rebbe’s Torah.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="feature-row reverse">
+                    <div class="feature-image">
+                        <div class="image-container">
+                            <img src="Mivtzahs.heic" alt="Programs throughout the year" class="feature-photo">
+                        </div>
+                    </div>
+                    <div class="feature-content">
+                        <h3 class="feature-title">Mivtzah's</h3>
+                        <p class="feature-text">
+                            The shluchim also organize special programs throughout the year tied to Yomim Tovim and Yomei Depagra, highlighting the Rebbe’s perspective on each occasion and giving bochurim opportunities to experience the Rebbe’s teachings in action.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Donate Section -->
+    <section id="donate" class="donate-section">
+        <div class="container">
+            <div class="donate-content">
+                <h2 class="section-title white-text">Support Our Mission</h2>
+                <p class="section-description white-text">
+                    Your generous donation helps us continue providing world-class Torah education 
+                    and training the next generation of Jewish leaders.
+                </p>
+                <button class="btn btn-donate" onclick="handleDonate()">
+                    <span class="btn-icon">♥</span>
+                    Donate Now
+                </button>
+                <p class="donate-note">
+                    Secure donation processing powered by Stripe
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="contact-header">
+                <h2 class="section-title white-text">Contact Us</h2>
+                <p class="section-description white-text">
+                    Get in touch with us or come visit the yeshiva.
+                </p>
+            </div>
+
+            <div class="contact-split">
+                <div class="contact-map">
+                    <div class="map-embed">
+                        <iframe
+                            title="Yeshiva Location Map"
+                            src="https://www.google.com/maps?q=1140+Alton+Road,+Miami+Beach,+FL+33139&hl=en&z=15&output=embed"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+                <div class="contact-details">
+                    <div class="detail">
+                        <h3 class="contact-title">Address</h3>
+                        <p class="contact-info">
+                            <a class="contact-link" target="_blank" rel="noopener" href="https://maps.google.com/?q=1140+Alton+Road,+Miami+Beach,+FL+33139">
+                                1140 Alton Road, Miami Beach, FL 33139
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="detail">
+                        <h3 class="contact-title">Phone</h3>
+                        <p class="contact-info"><a class="contact-link" href="tel:+13472205998">(347) 220-5998</a></p>
+                    </div>
+
+                    <div class="detail">
+                        <h3 class="contact-title">Email</h3>
+                        <p class="contact-info">
+                            <a class="contact-link" href="mailto:YGShluchim86@gmail.com?subject=Inquiry%20from%20Website">YGShluchim86@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">
+                © 2024 Yeshiva Gedolah Miami Shluchim. All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
