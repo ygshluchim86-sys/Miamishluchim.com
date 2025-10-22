@@ -260,11 +260,11 @@ function showDonationModal() {
         <p>We are currently working on adding our online donation platform. Until then, you can donate using one of the methods below:</p>
     </div>
     <a href="${cashAppLink}" target="_blank" class="donation-link cashapp">
-        <img src="cashapp-svgrepo-com.svg" alt="CashApp">
+        <img src="Images/cashapp-svgrepo-com.svg" alt="CashApp">
         <span>CashApp</span>
     </a>
     <a href="https://zellepay.com/send?recipient=3472205998" target="_blank" class="donation-link zelle">
-        <img src="Zelle®_id9eOrSaCY_0.svg" alt="Zelle">
+        <img src="Images/Zelle®_id9eOrSaCY_0.svg" alt="Zelle">
         <span>Zelle 347-220-5998</span>
     </a>
     <a href="${venmoLink}" target="_blank" class="donation-link venmo">
