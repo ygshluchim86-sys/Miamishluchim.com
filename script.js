@@ -151,7 +151,6 @@ function showDonationModal() {
         .donation-link img {
             height: 24px;
             width: auto;
-            filter: brightness(0) invert(1);
         }
         .cashapp { background: linear-gradient(135deg, #00D632, #00B82A); }
         .cashapp:hover { background: linear-gradient(135deg, #00B82A, #009620); }
