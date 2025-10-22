@@ -255,10 +255,11 @@ function showDonationModal() {
     <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
     <h2 class="modal-title">Donate to YG Miami</h2>
     <div class="modal-description">
-        <p><strong>Thank you for supporting our mission!</strong></p>
-        <p>Your generous donation helps us continue providing world-class Torah education and training the next generation of Jewish leaders.</p>
-        <p>We are currently working on adding our online donation platform. Until then, you can donate using one of the methods below:</p>
-    </div>
+    <p><strong>Thank you for supporting our mission!</strong></p>
+    <p>Your generous donation helps us continue providing world-class Torah education and training the next generation of Jewish leaders.</p>
+    <p>We are currently working on adding our online donation platform. Until then, you can donate using one of the methods below:</p>
+    <p>If you have any questions or would like to donate for a specific purpose, please email us at <a href="mailto:Donations@miamishluchim.com">Donations@miamishluchim.com</a>.</p>
+</div>
     <a href="${cashAppLink}" target="_blank" class="donation-link cashapp">
         <img src="Images/cashapp-svgrepo-com.svg" alt="CashApp">
         <span>CashApp</span>
