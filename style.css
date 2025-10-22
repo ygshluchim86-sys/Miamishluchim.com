@@ -22,7 +22,7 @@ body {
     overflow-x: hidden;
     font-size: 1rem;
     word-wrap: break-word;
-    hyphens: auto;
+    hyphens: none;
 }
 
 /* Touch-friendly base styles */
