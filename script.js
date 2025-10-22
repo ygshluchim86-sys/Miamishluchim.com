@@ -221,6 +221,7 @@ function showDonationModal() {
             transform: rotate(90deg);
         }
         .modal-title {
+        text-align: center;
             color: #3b82f6;
             margin-bottom: 20px;
             margin-top: 0;
