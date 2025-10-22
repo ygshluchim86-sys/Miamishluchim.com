@@ -54,7 +54,6 @@ button, .btn, .nav-link, .contact-button {
 img {
     max-width: 100%;
     height: auto;
-    loading: lazy;
 }
 
 /* Smooth scrolling for older browsers */
@@ -1211,4 +1210,99 @@ img {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
+/* Modal (donation) styles previously injected by JS */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    backdrop-filter: blur(5px);
+    animation: modalFade 0.3s ease-out;
+}
+
+.modal-content {
+    background: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
+    max-width: 450px;
+    width: 95%;
+    position: relative;
+    margin: 20px;
+    animation: modalSlide 0.3s ease-out;
+}
+
+@keyframes modalSlide {
+    from { transform: translateY(-50px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes modalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.donation-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 14px 0;
+    padding: 18px 20px;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 16px;
+    min-height: 56px;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.donation-link:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0,0,0,0.3); }
+.donation-link img { height: 24px; width: auto; filter: brightness(0) invert(1); }
+.cashapp { background: linear-gradient(135deg, #00D632, #00B82A); }
+.cashapp:hover { background: linear-gradient(135deg, #00B82A, #009620); }
+.zelle { background: linear-gradient(135deg, #6C1EB5, #5A1A9A); }
+.zelle:hover { background: linear-gradient(135deg, #5A1A9A, #481580); }
+.venmo { background: linear-gradient(135deg, #3D95CE, #2E7BB8); }
+.venmo:hover { background: linear-gradient(135deg, #2E7BB8, #1F63A2); }
+.paypal { background: linear-gradient(135deg, #0070BA, #005EA6); }
+.paypal:hover { background: linear-gradient(135deg, #005EA6, #004A92); }
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #6b7280;
+    transition: all 0.3s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.close-btn:hover { color: #1f2937; transform: rotate(90deg); }
+
+/* Ripple effect (previously injected) */
+.btn { position: relative; overflow: hidden; }
+.ripple { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.3); transform: scale(0); animation: ripple-animation 0.6s linear; pointer-events: none; }
+@keyframes ripple-animation { to { transform: scale(4); opacity: 0; } }
+
+/* Program card JS-controlled initial state - use classes rather than inline styles */
+.program-card.hidden { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.program-card.visible { opacity: 1; transform: translateY(0); }
 

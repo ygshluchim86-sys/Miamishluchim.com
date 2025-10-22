@@ -48,8 +48,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.style.opacity = '1';
-                entry.target.style.transform = 'translateY(0)';
+                entry.target.classList.remove('hidden');
+                entry.target.classList.add('visible');
             }
         });
     }, observerOptions);
@@ -57,10 +57,17 @@ document.addEventListener('DOMContentLoaded', function() {
     // Observe program cards
     const programCards = document.querySelectorAll('.program-card');
     programCards.forEach(card => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(30px)';
-        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        card.classList.add('hidden');
         observer.observe(card);
+    });
+
+    // Wire up donate buttons (no inline onclicks)
+    const donateButtons = document.querySelectorAll('.donate-trigger');
+    donateButtons.forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            handleDonate();
+        });
     });
 });
 
@@ -76,34 +83,11 @@ function scrollToSection(sectionId) {
     }
 }
 
-// Stripe Integration
-let stripe;
-let isStripeLoaded = false;
-
-// Initialize Stripe when the script loads
-function initializeStripe() {
-    if (typeof Stripe !== 'undefined') {
-        // Replace with your actual Stripe publishable key
-        const PUBLISHABLE_KEY = 'pk_test_51234567890abcdef'; // This needs to be replaced with actual key
-        stripe = Stripe(PUBLISHABLE_KEY);
-        isStripeLoaded = true;
-        console.log('Stripe initialized successfully');
-    } else {
-        console.error('Stripe.js failed to load');
-    }
-}
-
-// Wait for Stripe.js to load
-if (typeof Stripe !== 'undefined') {
-    initializeStripe();
-} else {
-    // Retry after a short delay
-    setTimeout(initializeStripe, 1000);
-}
+// No Stripe integration configured (removed)
 
 // Handle donation button clicks
 function handleDonate() {
-    showDonationInfo();
+    showDonationModal();
 }
 
 // ============================================
@@ -124,34 +108,11 @@ function showDonationModal() {
     
     // Create modal overlay
     const modal = document.createElement('div');
-    modal.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.6);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        z-index: 10000;
-        backdrop-filter: blur(5px);
-        animation: fadeIn 0.3s ease-out;
-    `;
+    modal.className = 'modal';
     
     // Create modal content
     const modalContent = document.createElement('div');
-    modalContent.style.cssText = `
-        background: white;
-        padding: 40px;
-        border-radius: 25px;
-        box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
-        max-width: 450px;
-        width: 95%;
-        position: relative;
-        animation: slideIn 0.3s ease-out;
-        margin: 20px;
-    `;
+    modalContent.className = 'modal-content';
     
     // Add animation styles
     const style = document.createElement('style');
@@ -253,7 +214,7 @@ function showDonationModal() {
     `;
     document.head.appendChild(style);
     modalContent.innerHTML = `
-    <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
+    <button class="close-btn" aria-label="Close modal">&times;</button>
     <h2 class="modal-title">Donate to <br> The Shluchim Of YG Miami</h2>
     <div class="modal-description">
     <p><strong>Thank you for supporting our mission!</strong></p>
@@ -307,6 +268,14 @@ function showDonationModal() {
             modals.forEach(m => m.remove());
         }
     });
+
+    // Close modal when clicking the close button (attach listener instead of inline onclick)
+    const closeBtn = modalContent.querySelector('.close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', function() {
+            modal.remove();
+        });
+    }
 }
 
 // Form validation and interactions
@@ -326,7 +295,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const size = Math.max(rect.width, rect.height);
             const x = e.clientX - rect.left - size / 2;
             const y = e.clientY - rect.top - size / 2;
-            
             ripple.style.width = ripple.style.height = size + 'px';
             ripple.style.left = x + 'px';
             ripple.style.top = y + 'px';
@@ -341,31 +309,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add CSS for ripple effect
-const style = document.createElement('style');
-style.textContent = `
-    .btn {
-        position: relative;
-        overflow: hidden;
-    }
-    
-    .ripple {
-        position: absolute;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
-        transform: scale(0);
-        animation: ripple-animation 0.6s linear;
-        pointer-events: none;
-    }
-    
-    @keyframes ripple-animation {
-        to {
-            transform: scale(4);
-            opacity: 0;
-        }
-    }
-`;
-document.head.appendChild(style);
+// Ripple styles and modal styles live in style.css now; no injected styles
 
 // Performance optimization: Lazy load images
 document.addEventListener('DOMContentLoaded', function() {
