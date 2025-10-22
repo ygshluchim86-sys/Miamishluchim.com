@@ -254,7 +254,7 @@ function showDonationModal() {
     document.head.appendChild(style);
     modalContent.innerHTML = `
     <button class="close-btn" onclick="this.closest('.modal').remove()">&times;</button>
-    <h2 class="modal-title">Donate to YG Miami</h2>
+    <h2 class="modal-title">Donate to <br> The Shluchim Of YG Miami</h2>
     <div class="modal-description">
     <p><strong>Thank you for supporting our mission!</strong></p>
     <p>Your generous donation helps us continue providing world-class Torah education and training the next generation of Jewish leaders.</p>
