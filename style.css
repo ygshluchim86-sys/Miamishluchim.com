@@ -1652,9 +1652,10 @@ img {
     transition: transform 150ms ease, background 150ms ease, opacity 150ms ease;
 }
 
-.pdf-nav-button i {
+.pdf-nav-button svg {
     color: inherit;
-    font-size: 22px;
+    width: 32px;
+    height: 32px;
 }
 
 /* Slight hover feedback for each arrow (subtle translucent circle) */

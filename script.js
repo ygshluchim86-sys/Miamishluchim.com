@@ -452,11 +452,13 @@ function showPdfModal(url, title) {
     const nav = document.createElement('div');
     nav.className = 'pdf-nav';
     const prevBtn = document.createElement('button');
-    prevBtn.className = 'pdf-nav-button'; prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    prevBtn.className = 'pdf-nav-button';
+    prevBtn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M15 18l-6-6 6-6"/></svg>';
     const pageIndicator = document.createElement('div');
     pageIndicator.className = 'pdf-page-indicator'; pageIndicator.textContent = '';
     const nextBtn = document.createElement('button');
-    nextBtn.className = 'pdf-nav-button'; nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nextBtn.className = 'pdf-nav-button';
+    nextBtn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 18l6-6-6-6"/></svg>';
     nav.appendChild(prevBtn); nav.appendChild(pageIndicator); nav.appendChild(nextBtn);
 
     const closeBtn = document.createElement('button');
