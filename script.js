@@ -403,6 +403,22 @@ document.addEventListener('click', function(e) {
 });
 
 function showPdfModal(url, title) {
+    // Ensure Font Awesome is loaded
+    function loadFontAwesome() {
+        return new Promise((resolve, reject) => {
+            if (document.querySelector('link[href*="font-awesome"]')) {
+                resolve();
+                return;
+            }
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css';
+            link.onload = resolve;
+            link.onerror = reject;
+            document.head.appendChild(link);
+        });
+    }
+
     // Load PDF.js dynamically if needed
     function loadPdfJs() {
         return new Promise((resolve, reject) => {
@@ -517,8 +533,8 @@ function showPdfModal(url, title) {
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
 
-    // load PDF.js and render
-    loadPdfJs().then(() => {
+    // load Font Awesome and PDF.js, then render
+    Promise.all([loadFontAwesome(), loadPdfJs()]).then(() => {
         const loadingTask = window.pdfjsLib.getDocument(url);
         loadingTask.promise.then(doc => {
             pdf = doc;
