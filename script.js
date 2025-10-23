@@ -310,6 +310,50 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Ripple styles and modal styles live in style.css now; no injected styles
 
+// Newsletter Carousel
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.querySelector('.newsletters-track');
+    const prevButton = document.getElementById('prevNewsletter');
+    const nextButton = document.getElementById('nextNewsletter');
+    let currentIndex = 0;
+
+    if (track && prevButton && nextButton) {
+        const items = track.children;
+        const itemWidth = items[0].offsetWidth + 32; // Including gap
+
+        // Update button states
+        function updateButtons() {
+            prevButton.style.opacity = currentIndex === 0 ? '0.5' : '1';
+            nextButton.style.opacity = currentIndex >= items.length - 1 ? '0.5' : '1';
+            prevButton.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
+            nextButton.style.cursor = currentIndex >= items.length - 1 ? 'not-allowed' : 'pointer';
+        }
+
+        // Move to next/previous item
+        function moveToItem(index) {
+            currentIndex = Math.max(0, Math.min(index, items.length - 1));
+            track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+            updateButtons();
+        }
+
+        // Event listeners for buttons
+        prevButton.addEventListener('click', () => {
+            if (currentIndex > 0) {
+                moveToItem(currentIndex - 1);
+            }
+        });
+
+        nextButton.addEventListener('click', () => {
+            if (currentIndex < items.length - 1) {
+                moveToItem(currentIndex + 1);
+            }
+        });
+
+        // Initial button state
+        updateButtons();
+    }
+});
+
 // Performance optimization: Lazy load images
 document.addEventListener('DOMContentLoaded', function() {
     const images = document.querySelectorAll('img');
