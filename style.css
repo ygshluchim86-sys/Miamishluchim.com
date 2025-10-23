@@ -1447,6 +1447,19 @@ img {
     }
 }
 
+/* SVG Icons */
+.carousel-button svg,
+.preview-overlay svg,
+.newsletter-btn svg {
+    width: 24px;
+    height: 24px;
+    color: currentColor;
+}
+
+.preview-overlay svg {
+    margin-right: 8px;
+}
+
 /* Animations */
 @keyframes fadeInUp {
     from {
