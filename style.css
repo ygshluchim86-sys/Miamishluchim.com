@@ -1606,47 +1606,61 @@ img {
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
+/* hide the page indicator - user requested only two arrows centered */
+.pdf-page-indicator { display: none; }
 
 /* Move nav to bottom center of the modal */
 .pdf-nav {
     position: absolute;
     left: 50%;
     bottom: 18px;
-    transform: translateX(-50%);
+    transform: translateX(calc(-50% - 24px)); /* shift more to the left */
     /* start transparent so the canvas edge is clean; the pill background appears on hover */
     background: transparent;
     padding: 0;
+    margin: 0; /* reset any auto margins from earlier rules so the group centers correctly */
     border-radius: 0;
-    gap: 10px;
+    gap: 48px; /* spacing between the two arrows */
+    justify-content: center;
+    align-items: center;
     z-index: 20;
 }
 
-/* Reveal a subtle pill behind the controls when hovering the modal */
+/* Reveal a subtle frosted pill behind the controls when hovering the modal */
 .pdf-modal-content:hover .pdf-nav,
 .pdf-modal-content:focus-within .pdf-nav {
-    background: rgba(255,255,255,0.92);
-    padding: 6px 10px;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px 16px;
     border-radius: 999px;
     box-shadow: none;
 }
 
 .pdf-nav-button {
-    width: 44px;
-    height: 44px;
-    border-radius: 8px;
-    color: #1f2937; /* dark chevrons when pill is visible */
-    background: transparent; /* make the arrow buttons transparent so only the chevrons show */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    color: #1f2937; /* dark chevrons per user request */
+    background: transparent; /* transparent circle by default */
     box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    font-size: 20px;
+    transition: transform 150ms ease, background 150ms ease, opacity 150ms ease;
 }
 
 .pdf-nav-button i {
     color: inherit;
-    font-size: 18px;
+    font-size: 22px;
 }
 
-/* When hovering the modal, keep the buttons visually minimal but allow a subtle hover state */
-.pdf-modal-content:hover .pdf-nav-button {
-    background: transparent;
+/* Slight hover feedback for each arrow (subtle translucent circle) */
+.pdf-nav-button:hover {
+    background: rgba(255,255,255,0.06);
+    transform: translateY(-2px) scale(1.03);
 }
 
 @media (max-width: 480px) {
@@ -1686,10 +1700,12 @@ img {
         background: rgba(255,255,255,0.04);
         padding: 8px;
     }
-    /* ensure the nav pill is visible on touch devices */
+    /* ensure the arrows are visible on touch devices with the frosted pill */
     .pdf-nav {
-        background: rgba(255,255,255,0.92);
-        padding: 6px 10px;
+        background: rgba(255,255,255,0.1);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        padding: 8px 16px;
         border-radius: 999px;
         box-shadow: none;
     }
