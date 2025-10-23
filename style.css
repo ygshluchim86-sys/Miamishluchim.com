@@ -1518,6 +1518,231 @@ img {
     animation: modalSlide 0.3s ease-out;
 }
 
+/* PDF modal (inline reader) */
+.pdf-modal-content {
+    background: transparent;
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    /* portrait-style modal: taller, constrained width to show one page at a time */
+    max-width: 640px;
+    width: 92%;
+    max-height: 96vh; /* nearly full viewport height */
+    position: relative;
+    margin: 8px auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    align-items: center;
+    /* do not add extra bottom padding - controls will overlay the canvas */
+    padding-bottom: 0;
+}
+
+.pdf-modal-header {
+    display: flex;
+    justify-content: flex-end;
+    /* take header out of document flow so it doesn't create a visible top "lip" */
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0;
+    background: transparent;
+    width: 100%;
+    pointer-events: none; /* enable on hover via parent rules */
+    z-index: 25;
+}
+
+.pdf-close-btn {
+    /* overlay the canvas: transparent by default so the image edge is clean */
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(255,255,255,0.9);
+    font-size: 26px;
+    line-height: 1;
+    z-index: 30;
+    transition: background 180ms ease, transform 180ms ease, color 180ms ease;
+}
+
+/* PDF nav controls inside header */
+.pdf-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-right: auto;
+    padding-left: 8px;
+}
+
+.pdf-nav-button {
+    background: rgba(255,255,255,0.95);
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+}
+
+.pdf-page-indicator {
+    font-size: 0.95rem;
+    color: #374151;
+    background: rgba(255,255,255,0.92);
+    padding: 6px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+/* Move nav to bottom center of the modal */
+.pdf-nav {
+    position: absolute;
+    left: 50%;
+    bottom: 18px;
+    transform: translateX(-50%);
+    /* start transparent so the canvas edge is clean; the pill background appears on hover */
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    gap: 10px;
+    z-index: 20;
+}
+
+/* Reveal a subtle pill behind the controls when hovering the modal */
+.pdf-modal-content:hover .pdf-nav,
+.pdf-modal-content:focus-within .pdf-nav {
+    background: rgba(255,255,255,0.92);
+    padding: 6px 10px;
+    border-radius: 999px;
+    box-shadow: none;
+}
+
+.pdf-nav-button {
+    width: 44px;
+    height: 44px;
+    border-radius: 8px;
+    color: #1f2937; /* dark chevrons when pill is visible */
+    background: transparent; /* make the arrow buttons transparent so only the chevrons show */
+    box-shadow: none;
+}
+
+.pdf-nav-button i {
+    color: inherit;
+    font-size: 18px;
+}
+
+/* When hovering the modal, keep the buttons visually minimal but allow a subtle hover state */
+.pdf-modal-content:hover .pdf-nav-button {
+    background: transparent;
+}
+
+@media (max-width: 480px) {
+    .pdf-modal-content { padding-bottom: 64px; }
+    .pdf-nav { bottom: 12px; }
+    .pdf-nav-button { width: 38px; height: 38px; }
+}
+
+/* Hide controls by default on pointer devices; reveal on hover/focus */
+.pdf-nav,
+.pdf-close-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 180ms ease, transform 180ms ease;
+    transform: translateY(6px);
+}
+.pdf-modal-content:hover .pdf-nav,
+.pdf-modal-content:focus-within .pdf-nav,
+.pdf-modal-content:hover .pdf-close-btn,
+.pdf-modal-content:focus-within .pdf-close-btn,
+.modal:hover .pdf-close-btn {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+}
+
+/* On touch devices (no hover), always show controls */
+@media (hover: none) {
+    .pdf-nav,
+    .pdf-close-btn {
+        opacity: 1;
+        pointer-events: auto;
+        transform: translateY(0);
+    }
+    /* show a subtle header on touch so the close button has space */
+    .pdf-modal-header {
+        background: rgba(255,255,255,0.04);
+        padding: 8px;
+    }
+    /* ensure the nav pill is visible on touch devices */
+    .pdf-nav {
+        background: rgba(255,255,255,0.92);
+        padding: 6px 10px;
+        border-radius: 999px;
+        box-shadow: none;
+    }
+}
+
+/* Reveal header background/padding when hovering the modal */
+.pdf-modal-content:hover .pdf-modal-header,
+.pdf-modal-content:focus-within .pdf-modal-header {
+    background: rgba(255,255,255,0.04);
+    padding: 8px;
+    pointer-events: auto;
+}
+
+.pdf-iframe {
+    /* keep the iframe narrow and very tall so each PDF page displays like a physical page */
+    width: 100%;
+    max-width: 640px;
+    height: calc(96vh - 56px); /* header + small gap accounted for */
+    border: 0;
+    display: block;
+    background: white;
+}
+
+/* PDF.js canvas container */
+.pdf-canvas-container {
+    width: 100%;
+    max-width: 640px;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+}
+
+.pdf-canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+/* Mobile: use almost full viewport but keep portrait impression */
+@media (max-width: 600px) {
+    .pdf-modal-content {
+        width: 96%;
+        max-width: 96vw;
+        max-height: 96vh;
+    }
+    .pdf-iframe {
+        height: calc(92vh - 56px);
+    }
+}
+
 @keyframes modalSlide {
     from { transform: translateY(-50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }

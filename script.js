@@ -392,3 +392,146 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+// Open PDF preview in an inline modal for reading (delegated listener)
+document.addEventListener('click', function(e) {
+    const link = e.target.closest('a.pdf-view');
+    if (!link) return;
+    e.preventDefault();
+    const url = link.getAttribute('href');
+    const title = link.dataset.title || 'Newsletter';
+    if (url) showPdfModal(url, title);
+});
+
+function showPdfModal(url, title) {
+    // Load PDF.js dynamically if needed
+    function loadPdfJs() {
+        return new Promise((resolve, reject) => {
+            if (window.pdfjsLib) return resolve(window.pdfjsLib);
+            const script = document.createElement('script');
+            // Using a stable CDN version
+            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js';
+            script.onload = () => {
+                // worker
+                if (window.pdfjsLib) {
+                    window.pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+                    resolve(window.pdfjsLib);
+                } else {
+                    reject(new Error('pdfjs failed to load'));
+                }
+            };
+            script.onerror = reject;
+            document.head.appendChild(script);
+        });
+    }
+
+    // Create modal overlay and structure
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    const content = document.createElement('div');
+    content.className = 'pdf-modal-content';
+
+    const header = document.createElement('div');
+    header.className = 'pdf-modal-header';
+
+    const nav = document.createElement('div');
+    nav.className = 'pdf-nav';
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'pdf-nav-button'; prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    const pageIndicator = document.createElement('div');
+    pageIndicator.className = 'pdf-page-indicator'; pageIndicator.textContent = '';
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pdf-nav-button'; nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    nav.appendChild(prevBtn); nav.appendChild(pageIndicator); nav.appendChild(nextBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'pdf-close-btn'; closeBtn.innerHTML = '&times;';
+    header.appendChild(nav); header.appendChild(closeBtn);
+
+    // Canvas container
+    const canvasContainer = document.createElement('div');
+    canvasContainer.className = 'pdf-canvas-container';
+    const canvas = document.createElement('canvas');
+    canvas.className = 'pdf-canvas';
+    canvasContainer.appendChild(canvas);
+
+    content.appendChild(header);
+    content.appendChild(canvasContainer);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+
+    let pdf = null;
+    let currentPage = 1;
+    let totalPages = 0;
+
+    function renderPage(pageNum) {
+        pdf.getPage(pageNum).then(page => {
+            // fit to container width while keeping aspect ratio
+            const containerWidth = Math.min(canvasContainer.clientWidth, 640);
+            const viewport = page.getViewport({ scale: 1 });
+            const scale = containerWidth / viewport.width;
+            const scaledViewport = page.getViewport({ scale });
+            const context = canvas.getContext('2d');
+            canvas.width = Math.floor(scaledViewport.width);
+            canvas.height = Math.floor(scaledViewport.height);
+            // clear previous
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            const renderContext = {
+                canvasContext: context,
+                viewport: scaledViewport
+            };
+            page.render(renderContext);
+            pageIndicator.textContent = currentPage + ' / ' + totalPages;
+            // update nav button states
+            prevBtn.disabled = currentPage <= 1;
+            nextBtn.disabled = currentPage >= totalPages;
+        }).catch(err => {
+            console.error('Error rendering page', err);
+        });
+    }
+
+    function cleanup() {
+        if (pdf && pdf.destroy) pdf.destroy();
+        if (modal && modal.parentNode) modal.parentNode.removeChild(modal);
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onKey);
+        window.removeEventListener('resize', onResize);
+    }
+
+    function onKey(e) {
+        if (e.key === 'Escape') cleanup();
+        if (e.key === 'ArrowRight') { if (currentPage < totalPages) { currentPage++; renderPage(currentPage); } }
+        if (e.key === 'ArrowLeft') { if (currentPage > 1) { currentPage--; renderPage(currentPage); } }
+    }
+
+    function onResize() {
+        // re-render current page to adjust scale
+        renderPage(currentPage);
+    }
+
+    // Wire up buttons
+    prevBtn.addEventListener('click', function(e) { e.preventDefault(); if (currentPage > 1) { currentPage--; renderPage(currentPage); } });
+    nextBtn.addEventListener('click', function(e) { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderPage(currentPage); } });
+    closeBtn.addEventListener('click', cleanup);
+    modal.addEventListener('click', function(e) { if (e.target === modal) cleanup(); });
+    document.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+
+    // load PDF.js and render
+    loadPdfJs().then(() => {
+        const loadingTask = window.pdfjsLib.getDocument(url);
+        loadingTask.promise.then(doc => {
+            pdf = doc;
+            totalPages = pdf.numPages;
+            currentPage = 1;
+            renderPage(currentPage);
+        }).catch(err => {
+            console.error('Error loading PDF', err);
+            cleanup();
+        });
+    }).catch(err => {
+        console.error('Failed to load PDF.js', err);
+        cleanup();
+    });
+}
+
