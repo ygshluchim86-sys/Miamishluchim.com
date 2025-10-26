@@ -1526,6 +1526,7 @@ img {
     box-shadow: 0 25px 60px rgba(0, 0, 0, 0.3);
     max-width: 450px;
     width: 95%;
+    align-items: center;
     position: relative;
     margin: 20px;
     animation: modalSlide 0.3s ease-out;
