@@ -106,120 +106,165 @@ function showDonationModal() {
     const paypalLink = 'https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&business=mendelmarkel13@gmail.com';
 
     
-    // Create modal overlay
-    const modal = document.createElement('div');
-    modal.className = 'modal';
-    
-    // Create modal content
-    const modalContent = document.createElement('div');
-    modalContent.className = 'modal-content';
-    
-    // Add animation styles
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes slideIn {
-            from { transform: translateY(-50px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        .donation-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin: 14px 0;
-            padding: 18px 20px;
-            color: white;
-            text-decoration: none;
-            border-radius: 25px;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            font-size: 16px;
-            min-height: 56px;
-            text-align: center;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-        }
-        .donation-link:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-        .donation-link img {
-            height: 24px;
-            width: auto;
-        }
-        .cashapp { background: linear-gradient(135deg, #00D632, #00B82A); }
-        .cashapp:hover { background: linear-gradient(135deg, #00B82A, #009620); }
-        .zelle { background: linear-gradient(135deg, #6C1EB5, #5A1A9A); }
-        .zelle:hover { background: linear-gradient(135deg, #5A1A9A, #481580); }
-        .venmo { background: linear-gradient(135deg, #3D95CE, #2E7BB8); }
-        .venmo:hover { background: linear-gradient(135deg, #2E7BB8, #1F63A2); }
-        .paypal { background: linear-gradient(135deg, #0070BA, #005EA6); }
-        .paypal:hover { background: linear-gradient(135deg, #005EA6, #004A92); }
-        .close-btn {
-            position: absolute;
-            top: 20px;
-            right: 25px;
-            background: none;
-            border: none;
-            font-size: 28px;
-            cursor: pointer;
-            color: #6b7280;
-            transition: all 0.3s ease;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .close-btn:hover { 
-            color: #1f2937;
-            transform: rotate(90deg);
+// Create modal overlay
+const modal = document.createElement('div');
+modal.className = 'modal';
+
+// Create modal content
+const modalContent = document.createElement('div');
+modalContent.className = 'modal-content';
+
+// Add animation styles
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes slideIn {
+        from { transform: translateY(-50px); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    .modal {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+        z-index: 1000;
+    }
+    .modal-content {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        max-width: 500px;
+        width: 90%;
+        box-sizing: border-box;
+        animation: slideIn 0.3s ease-out;
+    }
+    .donation-link {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        margin: 14px 0;
+        padding: 18px 20px;
+        color: white;
+        text-decoration: none;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        font-size: 16px;
+        min-height: 56px;
+        text-align: center;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    .donation-link:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+    .donation-link img {
+        height: 24px;
+        width: auto;
+    }
+    .cashapp { background: linear-gradient(135deg, #00D632, #00B82A); }
+    .cashapp:hover { background: linear-gradient(135deg, #00B82A, #009620); }
+    .zelle { background: linear-gradient(135deg, #6C1EB5, #5A1A9A); }
+    .zelle:hover { background: linear-gradient(135deg, #5A1A9A, #481580); }
+    .venmo { background: linear-gradient(135deg, #3D95CE, #2E7BB8); }
+    .venmo:hover { background: linear-gradient(135deg, #2E7BB8, #1F63A2); }
+    .paypal { background: linear-gradient(135deg, #0070BA, #005EA6); }
+    .paypal:hover { background: linear-gradient(135deg, #005EA6, #004A92); }
+    .close-btn {
+        position: absolute;
+        top: 20px;
+        right: 25px;
+        background: none;
+        border: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: #6b7280;
+        transition: all 0.3s ease;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .close-btn:hover { 
+        color: #1f2937;
+        transform: rotate(90deg);
+    }
+    .modal-title {
+        text-align: center;
+        color: #3b82f6;
+        margin-bottom: 20px;
+        margin-top: 0;
+        font-size: 24px;
+        font-weight: 700;
+    }
+    .modal-description {
+        margin-bottom: 25px;
+        color: #4b5563;
+        line-height: 1.6;
+        text-align: center;
+    }
+    .modal-description p {
+        margin: 10px 0;
+    }
+    .modal-description strong {
+        color: #1f2937;
+    }
+    @media (max-width: 480px) {
+        .modal-content {
+            max-width: 90%; /* Keep width responsive for platforms like Wise */
+            width: 90%;
+            padding: 15px; /* Reduced padding */
+            box-sizing: border-box; /* Ensure padding doesn't increase size */
+            min-height: 70vh; /* Ensure modal is tall enough to fit page */
+            max-height: 80vh; /* Limit height to avoid overflow */
+            overflow-y: auto; /* Allow scrolling if content is too long */
         }
         .modal-title {
-        text-align: center;
-            color: #3b82f6;
-            margin-bottom: 20px;
-            margin-top: 0;
-            font-size: 24px;
-            font-weight: 700;
+            font-size: 20px; /* Smaller title */
+            margin-bottom: 15px;
         }
         .modal-description {
-            margin-bottom: 25px;
-            color: #4b5563;
-            line-height: 1.6;
-            text-align: center;
+            font-size: 14px; /* Smaller description text */
+            margin-bottom: 15px;
         }
-        .modal-description p {
-            margin: 10px 0;
+        .donation-link {
+            padding: 12px 10px; /* Reduced padding */
+            font-size: 14px; /* Smaller font */
+            margin: 8px 0; /* Smaller margins */
+            min-height: 48px; /* Smaller button height */
         }
-        .modal-description strong {
-            color: #1f2937;
+        .donation-link img {
+            height: 20px; /* Smaller image */
         }
-        @media (max-width: 480px) {
-            .donation-link {
-                padding: 16px 15px;
-                font-size: 15px;
-                margin: 10px 0;
-            }
-            .donation-link img {
-                height: 22px;
-            }
+        .close-btn {
+            top: 10px; /* Adjust position */
+            right: 15px;
+            font-size: 22px; /* Smaller close button */
+            width: 30px;
+            height: 30px;
         }
-    `;
+    }
+`;
     document.head.appendChild(style);
     modalContent.innerHTML = `
     <button class="close-btn" aria-label="Close modal">&times;</button>
     <h2 class="modal-title">Donate to <br> The Shluchim Of YG Miami</h2>
     <div class="modal-description">
     <p><strong>Thank you for supporting our mission!</strong></p>
-    <p>Your generous donation helps us continue providing world-class Torah education and training the next generation of Jewish leaders.</p>
     <p>We are currently working on adding our online donation platform. Until then, you can donate using one of the methods below:</p>
-    <p>If you have any questions or would like to donate for a specific purpose, please email us at <a href="mailto:Donations@miamishluchim.com">Donations@miamishluchim.com</a>.</p>
+    <p>If you have any questions or would like to donate for a specific purpose, please email us at <a href="mailto:YGShluchim@gmail.com">YGShluchim@Gmail.com</a>.</p>
 </div>
     <a href="${cashAppLink}" target="_blank" class="donation-link cashapp">
         <img src="Images/cashapp-svgrepo-com.svg" alt="CashApp">
