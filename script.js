@@ -142,9 +142,10 @@ style.textContent = `
         border-radius: 10px;
         padding: 20px;
         max-width: 500px;
-        width: 90%;
+        width: 85%; /* Slightly reduced for better fit */
         box-sizing: border-box;
         animation: slideIn 0.3s ease-out;
+        margin: 0 auto; /* Ensure centering */
     }
     .donation-link {
         display: flex;
@@ -223,37 +224,38 @@ style.textContent = `
     }
     @media (max-width: 480px) {
         .modal-content {
-            max-width: 90%; /* Keep width responsive for platforms like Wise */
-            width: 90%;
-            padding: 15px; /* Reduced padding */
-            box-sizing: border-box; /* Ensure padding doesn't increase size */
-            min-height: 70vh; /* Ensure modal is tall enough to fit page */
-            max-height: 80vh; /* Limit height to avoid overflow */
+            max-width: 80%; /* Reduced width for smaller appearance */
+            width: 80%;
+            padding: 12px; /* Further reduced padding */
+            box-sizing: border-box;
+            min-height: 60vh; /* Balanced height to fit page */
+            max-height: 75vh; /* Limit height to avoid overflow */
             overflow-y: auto; /* Allow scrolling if content is too long */
+            margin: 0 auto; /* Ensure centering */
         }
         .modal-title {
-            font-size: 20px; /* Smaller title */
-            margin-bottom: 15px;
+            font-size: 18px; /* Slightly smaller title */
+            margin-bottom: 12px;
         }
         .modal-description {
-            font-size: 14px; /* Smaller description text */
-            margin-bottom: 15px;
+            font-size: 13px; /* Smaller description text */
+            margin-bottom: 12px;
         }
         .donation-link {
-            padding: 12px 10px; /* Reduced padding */
-            font-size: 14px; /* Smaller font */
-            margin: 8px 0; /* Smaller margins */
-            min-height: 48px; /* Smaller button height */
+            padding: 10px 8px; /* Further reduced padding */
+            font-size: 13px; /* Smaller font */
+            margin: 6px 0; /* Smaller margins */
+            min-height: 44px; /* Smaller button height */
         }
         .donation-link img {
-            height: 20px; /* Smaller image */
+            height: 18px; /* Smaller image */
         }
         .close-btn {
-            top: 10px; /* Adjust position */
-            right: 15px;
-            font-size: 22px; /* Smaller close button */
-            width: 30px;
-            height: 30px;
+            top: 8px; /* Adjusted position */
+            right: 12px;
+            font-size: 20px; /* Smaller close button */
+            width: 28px;
+            height: 28px;
         }
     }
 `;
