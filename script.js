@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const track = section ? section.querySelector('.progress-track') : null;
     const fill = section ? section.querySelector('.progress-fill') : null;
     const recentDonationsList = document.getElementById('recentDonationsList');
-    const donationGoal = 50000; // $50,000 goal
+    const donationGoal = 67000; // $67,000 goal
 
     if (!section || !progressText || !track || !fill || !recentDonationsList) return;
 
