@@ -50,7 +50,6 @@
                 <a href="#programs" class="nav-link">Programs</a>
                 <a href="#newsletter" class="nav-link">Newsletter</a>
                 <a href="#contact" class="nav-link">Contact</a>
-                <button class="donate-btn nav-donate donate-trigger">Donate</button>
             </div>
             <div class="nav-toggle" id="nav-toggle">
                 <span class="bar"></span>
@@ -60,25 +59,59 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero Section (Fundraiser hero) -->
     <section id="home" class="hero">
         <div class="hero-container">
-            <div class="hero-content">
-                <h1 class="hero-title">
-                    Yeshiva Gedolah
-                    <span class="hero-title-accent">Miami Shluchim</span>
-                </h1>
-                <p class="hero-description">
-                    Over 50 years of Torah, leadership, and the Rebbe’s first Shluchim in America.
-                </p>
-                <div class="hero-buttons">
-                    <button class="btn btn-secondary donate-trigger">
-                        Donate Now
-                    </button>
+            <div class="hero-donate-outer">
+                <!-- Decorative heading left for context -->
+                <div class="hero-intro">
+                    <h1 class="hero-title">
+                        <span class="hero-title-accent">Yeshiva Gedolah Miami Shluchim</span>
+                        Annual Chanukah Fundraiser
+                    </h1>
+                </div>
+
+                <!-- Hero Fundraiser Card (transparent overlay) -->
+                <div class="hero-donate">
+                    <div class="donate-card" id="donationSection" aria-labelledby="donation-title">
+                        <div class="donate-left">
+                            <!-- Hero description: placed on the left side and slightly larger for emphasis -->
+                            <div class="hero-box-left white-text" id="donation-title">
+                                <strong>Help us light the way this Chanukah</strong>
+                                <div class="hero-box-left-sub">Support Torah learning, Mivtzoyim, and our dedicated bochurim this Chanukah season. As we light the menorah, your generous gift kindles mitzvos, strengthens Jewish life, and helps our young scholars shine brighter. Every donation makes a lasting difference.</div>
+                            </div>
+
+                            <div class="progress-wrap">
+                                <div class="progress-top">
+                                    <div id="progressText" aria-live="polite" class="progress-summary">$0 of $50,000 • 0%</div>
+                                    <div id="remainingText" class="remaining-text">Remaining: $50,000</div>
+                                </div>
+                                <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="50000" aria-valuenow="0">
+                                    <div id="progressBar" class="progress-fill" style="width: 0%"></div>
+                                </div>
+                            </div>
+
+                            <div class="donate-cta">
+                                <button class="btn btn-donate donate-trigger">Donate</button>
+                            </div>
+                        </div>
+
+                        <div class="donate-right">
+                            <div class="recent-donations">
+                                <div class="recent-header">
+                                    <h3 class="section-subtitle white-text">Top Donations</h3>
+                                </div>
+                                        <div id="recentDonationsList" aria-label="Top donations"></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Donate anchor (kept for compatibility) -->
+    <section id="donate" class="donate-section" aria-hidden="true"></section>
 
     <!-- About Section -->
     <section id="about" class="about">
@@ -224,26 +257,7 @@
             </div>
         </div>
     </section>
-
-    <!-- Donate Section -->
-    <section id="donate" class="donate-section">
-        <div class="container">
-            <div class="donate-content">
-                <h2 class="section-title white-text">Support Our Mission</h2>
-                <p class="section-description white-text">
-                    Your generous donation helps us continue providing world-class Torah education 
-                    and training the next generation of Jewish leaders.
-                </p>
-                <button class="btn btn-donate donate-trigger">
-                    Donate Now
-                </button>
-                <p class="donate-note">
-                    Secure donation processing
-                </p>
-            </div>
-        </div>
-    </section>
-
+    <!-- Donate section moved to hero above. This placeholder section removed to avoid duplicate donation UI. -->
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
@@ -283,7 +297,7 @@
                     <div class="detail">
                         <h3 class="contact-title">Email</h3>
                         <p class="contact-info">
-                            <a class="contact-link" href="mailto:Shluchim@miamishluchim.com?subject=Inquiry%20from%20Website">Shluchim@miamishluchim.com</a>
+                            <a class="contact-link" href="mailto:YGShluchim@gmail.com?subject=Inquiry%20from%20Website">YGShluchim@gmail.com</a>
                         </p>
                     </div>
                 </div>
@@ -296,7 +310,7 @@
     <div class="container">
         <p class="footer-text">
             © 5786 Yeshiva Gedolah Miami Shluchim. All rights reserved.
-            <a class="contact-link" href="mailto:Shluchim@miamishluchim.com">Shluchim@miamishluchim.com</a>
+            <a class="contact-link" href="mailto:Shluchim@miamishluchim.com">YGShluchim@gmail.com</a>
             <br>
             Built by 
             <a class="dev-link" href="https://nighttimeweb.com" target="_blank" rel="noopener noreferrer">
