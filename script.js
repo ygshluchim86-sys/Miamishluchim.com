@@ -1,10 +1,10 @@
 // Mobile Navigation Toggle
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const navToggle = document.getElementById('nav-toggle');
     const navMenu = document.getElementById('nav-menu');
 
     if (navToggle && navMenu) {
-        navToggle.addEventListener('click', function() {
+        navToggle.addEventListener('click', function () {
             navMenu.classList.toggle('active');
             navToggle.classList.toggle('active');
         });
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Close menu when clicking on a link
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function () {
                 navMenu.classList.remove('active');
                 navToggle.classList.remove('active');
             });
@@ -22,11 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for navigation links
     const links = document.querySelectorAll('a[href^="#"]');
     links.forEach(link => {
-        link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
             e.preventDefault();
             const targetId = this.getAttribute('href');
             const targetSection = document.querySelector(targetId);
-            
+
             if (targetSection) {
                 const offsetTop = targetSection.offsetTop - 70; // Account for fixed navbar
                 window.scrollTo({
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
         rootMargin: '0px 0px -50px 0px'
     };
 
-    const observer = new IntersectionObserver(function(entries) {
+    const observer = new IntersectionObserver(function (entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.remove('hidden');
@@ -59,14 +59,14 @@ document.addEventListener('DOMContentLoaded', function() {
         observer.observe(card);
     });
 
-        // Wire up donate buttons
-        const donateButtons = document.querySelectorAll('.donate-trigger');
-        donateButtons.forEach(btn => {
-            btn.addEventListener('click', function(e) {
-                e.preventDefault();
-                handleDonate();
-            });
+    // Wire up donate buttons
+    const donateButtons = document.querySelectorAll('.donate-trigger');
+    donateButtons.forEach(btn => {
+        btn.addEventListener('click', function (e) {
+            e.preventDefault();
+            handleDonate();
         });
+    });
 });
 
 // Scroll to section function
@@ -151,7 +151,7 @@ function showDonationModal() {
     const onKey = (e) => { if (e.key === 'Escape') cleanup(); };
 
     // Close modal when clicking outside
-    modal.addEventListener('click', function(e) { if (e.target === modal) cleanup(); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) cleanup(); });
     // Close modal with Escape key
     document.addEventListener('keydown', onKey);
     // Close modal when clicking the close button
@@ -169,11 +169,11 @@ function validateEmail(email) {
 window.validateEmail = validateEmail;
 
 // Add smooth hover effects
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Add ripple effect to buttons
     const buttons = document.querySelectorAll('.btn');
     buttons.forEach(button => {
-        button.addEventListener('click', function(e) {
+        button.addEventListener('click', function (e) {
             const ripple = document.createElement('span');
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
@@ -183,9 +183,9 @@ document.addEventListener('DOMContentLoaded', function() {
             ripple.style.left = x + 'px';
             ripple.style.top = y + 'px';
             ripple.classList.add('ripple');
-            
+
             this.appendChild(ripple);
-            
+
             setTimeout(() => {
                 ripple.remove();
             }, 600);
@@ -193,54 +193,152 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Newsletter Carousel
-document.addEventListener('DOMContentLoaded', function() {
+// Newsletter Carousel Premium Upgrade
+document.addEventListener('DOMContentLoaded', function () {
     const track = document.querySelector('.newsletters-track');
+    const container = document.querySelector('.newsletters-container');
     const prevButton = document.getElementById('prevNewsletter');
     const nextButton = document.getElementById('nextNewsletter');
-    let currentIndex = 0;
 
     if (track && prevButton && nextButton) {
-        const items = track.children;
-        const itemWidth = items[0].offsetWidth + 32; // Including gap
+        const items = Array.from(track.children);
+        let currentIndex = 0;
 
-        // Update button states
-        function updateButtons() {
-            prevButton.style.opacity = currentIndex === 0 ? '0.5' : '1';
-            nextButton.style.opacity = currentIndex >= items.length - 1 ? '0.5' : '1';
-            prevButton.style.cursor = currentIndex === 0 ? 'not-allowed' : 'pointer';
-            nextButton.style.cursor = currentIndex >= items.length - 1 ? 'not-allowed' : 'pointer';
+        function updateCarousel() {
+            const containerWidth = container.offsetWidth;
+            const itemWidth = items[0].offsetWidth;
+            const gap = parseInt(getComputedStyle(track).gap) || 0;
+
+            // Calculate the offset to center the current item
+            const offset = (containerWidth / 2) - (itemWidth / 2) - (currentIndex * (itemWidth + gap));
+
+            track.style.transform = `translateX(${offset}px)`;
+
+            // Update active states
+            items.forEach((item, index) => {
+                if (index === currentIndex) {
+                    item.classList.add('active');
+                } else {
+                    item.classList.remove('active');
+                }
+            });
+
+            // Update button visibility/states
+            prevButton.style.opacity = currentIndex === 0 ? '0.3' : '1';
+            nextButton.style.opacity = currentIndex === items.length - 1 ? '0.3' : '1';
+            prevButton.disabled = currentIndex === 0;
+            nextButton.disabled = currentIndex === items.length - 1;
         }
 
-        // Move to next/previous item
-        function moveToItem(index) {
-            currentIndex = Math.max(0, Math.min(index, items.length - 1));
-            track.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
-            updateButtons();
-        }
-
-        // Event listeners for buttons
         prevButton.addEventListener('click', () => {
             if (currentIndex > 0) {
-                moveToItem(currentIndex - 1);
+                currentIndex--;
+                updateCarousel();
             }
         });
 
         nextButton.addEventListener('click', () => {
             if (currentIndex < items.length - 1) {
-                moveToItem(currentIndex + 1);
+                currentIndex++;
+                updateCarousel();
             }
         });
 
-        // Initial button state
-        updateButtons();
+        // Initialize and handle resize
+        window.addEventListener('resize', updateCarousel);
+
+        // Initial call after a small delay to ensure DOM is ready and widths are calculated
+        setTimeout(updateCarousel, 100);
+
+        // High-Fidelity Drag & Swipe Support
+        let isDragging = false;
+        let startX = 0;
+        let currentX = 0;
+        let initialOffset = 0;
+        let rafId = null;
+
+        function getOffset() {
+            const containerWidth = container.offsetWidth;
+            const itemWidth = items[0].offsetWidth;
+            const gap = parseInt(getComputedStyle(track).gap) || 0;
+            return (containerWidth / 2) - (itemWidth / 2) - (currentIndex * (itemWidth + gap));
+        }
+
+        function onStart(e) {
+            isDragging = true;
+            startX = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            currentX = startX;
+            initialOffset = getOffset();
+
+            track.style.transition = 'none'; // Disable transition during drag
+            container.style.cursor = 'grabbing';
+
+            if (rafId) cancelAnimationFrame(rafId);
+        }
+
+        function onMove(e) {
+            if (!isDragging) return;
+
+            const x = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
+            const walk = (x - startX) * 1.2; // Slight acceleration for better feel
+
+            track.style.transform = `translateX(${initialOffset + walk}px)`;
+            currentX = x;
+        }
+
+        function onEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            container.style.cursor = 'grab';
+
+            const deltaX = currentX - startX;
+            const threshold = items[0].offsetWidth * 0.2; // 20% of item width to trigger move
+
+            if (deltaX < -threshold && currentIndex < items.length - 1) {
+                currentIndex++;
+            } else if (deltaX > threshold && currentIndex > 0) {
+                currentIndex--;
+            }
+
+            track.style.transition = 'transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            updateCarousel();
+        }
+
+        // Mouse Events
+        container.addEventListener('mousedown', onStart);
+        window.addEventListener('mousemove', onMove);
+        window.addEventListener('mouseup', onEnd);
+
+        // Touch Events
+        container.addEventListener('touchstart', onStart, { passive: true });
+        container.addEventListener('touchmove', onMove, { passive: true });
+        container.addEventListener('touchend', onEnd, { passive: true });
+
+        // Prevent ghost clicks/drags on images
+        container.querySelectorAll('img').forEach(img => {
+            img.addEventListener('dragstart', (e) => e.preventDefault());
+        });
+
+        // Initialize and handle resize
+        window.addEventListener('resize', () => {
+            track.style.transition = 'none';
+            updateCarousel();
+            setTimeout(() => {
+                track.style.transition = 'transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1)';
+            }, 10);
+        });
+
+        // Initial setup
+        container.style.cursor = 'grab';
+        updateCarousel();
+        setTimeout(updateCarousel, 100);
     }
 });
 
 // Performance optimization: Lazy load images
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const images = document.querySelectorAll('img');
-    
+
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
@@ -265,10 +363,10 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Add error handling for missing images
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const images = document.querySelectorAll('img');
     images.forEach(img => {
-        img.addEventListener('error', function() {
+        img.addEventListener('error', function () {
             // eslint-disable-next-line no-console
             console.warn('Failed to load image:', this.src);
             // You could add a placeholder image here
@@ -278,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Open PDF preview in an inline modal for reading
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
     const link = e.target.closest('a.pdf-view');
     if (!link) return;
     e.preventDefault();
@@ -413,10 +511,10 @@ function showPdfModal(url, title) {
     }
 
     // Wire up buttons
-    prevBtn.addEventListener('click', function(e) { e.preventDefault(); if (currentPage > 1) { currentPage--; renderPage(currentPage); } });
-    nextBtn.addEventListener('click', function(e) { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderPage(currentPage); } });
+    prevBtn.addEventListener('click', function (e) { e.preventDefault(); if (currentPage > 1) { currentPage--; renderPage(currentPage); } });
+    nextBtn.addEventListener('click', function (e) { e.preventDefault(); if (currentPage < totalPages) { currentPage++; renderPage(currentPage); } });
     closeBtn.addEventListener('click', cleanup);
-    modal.addEventListener('click', function(e) { if (e.target === modal) cleanup(); });
+    modal.addEventListener('click', function (e) { if (e.target === modal) cleanup(); });
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', onResize);
 
@@ -686,8 +784,8 @@ document.addEventListener('DOMContentLoaded', () => {
         donations = [
             { name: 'Anonymous', amount: 1500 },
             { name: 'Yosef Cohen', amount: 1000 },
-            { name: 'Sarah Levi', amount: 250 } ,
-        
+            { name: 'Sarah Levi', amount: 250 },
+
         ];
         save(donations);
         updateRecent();

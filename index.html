@@ -47,7 +47,7 @@
         <div class="nav-container">
             <div class="nav-logo">
                 <a href="#home" class="nav-logo-link">
-                    <h1>Shluchim To YG Miami</h1>
+                    <h1>YG Miami Shluchim</h1>
                 </a>
             </div>
             <div class="nav-menu" id="nav-menu">
@@ -194,24 +194,18 @@
         <div class="container">
             <div class="newsletter-header">
                 <h2 class="section-title">Newsletter</h2>
-                <p class="section-description">Stay updated with our latest Mivtzah's and events.</p>
+                <p class="section-description">Stay updated with our latest Mivtzahs and events.</p>
             </div>
             <div class="newsletter-content">
                 <div class="newsletter-carousel">
-                    <button class="carousel-button prev" id="prevNewsletter">
-                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                            fill="none">
-                            <path d="M15 18l-6-6 6-6" />
-                        </svg>
-                    </button>
                     <div class="newsletters-container">
                         <div class="newsletters-track">
-                            <!-- Cheshvan Newsletter -->
-                            <div class="newsletter-item">
-                                <a href="files/Cheshvan Newsletter.pdf" class="pdf-preview pdf-view"
-                                    data-title="Cheshvan 5785">
-                                    <img src="Images/CheshvanNewsletterPreview.png"
-                                        alt="Cheshvan 5785 Newsletter Preview" class="preview-image">
+                            <!-- Kislev Newsletter -->
+                            <div class="newsletter-item active">
+                                <div class="edition-badge">Latest</div>
+                                <a href="files/Kislev Newsletter.pdf" class="pdf-preview pdf-view" data-title="Kislev">
+                                    <img src="Images/KislevNewsletterPreview.png" alt="Kislev Newsletter Preview"
+                                        class="preview-image">
                                     <div class="preview-overlay">
                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
                                             stroke-width="2" fill="none">
@@ -222,8 +216,40 @@
                                     </div>
                                 </a>
                                 <div class="newsletter-info">
-                                    <h3 class="newsletter-title">Cheshvan 5785</h3>
+                                    <h3 class="newsletter-title">Kislev</h3>
                                     <p class="newsletter-date">Current Edition</p>
+                                    <a href="files/Kislev Newsletter.pdf" class="btn btn-primary newsletter-btn"
+                                        download>
+                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                            stroke-width="2" fill="none">
+                                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                                            <polyline points="14 2 14 8 20 8" />
+                                            <line x1="12" y1="18" x2="12" y2="12" />
+                                            <line x1="9" y1="15" x2="15" y2="15" />
+                                        </svg>
+                                        Download Newsletter
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Cheshvan Newsletter -->
+                            <div class="newsletter-item">
+                                <a href="files/Cheshvan Newsletter.pdf" class="pdf-preview pdf-view"
+                                    data-title="Cheshvan">
+                                    <img src="Images/CheshvanNewsletterPreview.png" alt="Cheshvan Newsletter Preview"
+                                        class="preview-image">
+                                    <div class="preview-overlay">
+                                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
+                                            stroke-width="2" fill="none">
+                                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                            <circle cx="12" cy="12" r="3" />
+                                        </svg>
+                                        <span>Read Online</span>
+                                    </div>
+                                </a>
+                                <div class="newsletter-info">
+                                    <h3 class="newsletter-title">Cheshvan</h3>
+                                    <p class="newsletter-date">Previous Edition</p>
                                     <a href="files/Cheshvan Newsletter.pdf" class="btn btn-primary newsletter-btn"
                                         download>
                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
@@ -241,9 +267,9 @@
                             <!-- Elul-Tishrei Newsletter -->
                             <div class="newsletter-item">
                                 <a href="files/ElulTishrei Newsletter.pdf" class="pdf-preview pdf-view"
-                                    data-title="Elul-Tishrei 5784">
+                                    data-title="Elul-Tishrei">
                                     <img src="Images/ElulTishrei NewsletterPreview.jpg"
-                                        alt="Elul-Tishrei 5784 Newsletter Preview" class="preview-image">
+                                        alt="Elul-Tishrei Newsletter Preview" class="preview-image">
                                     <div class="preview-overlay">
                                         <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor"
                                             stroke-width="2" fill="none">
@@ -254,7 +280,7 @@
                                     </div>
                                 </a>
                                 <div class="newsletter-info">
-                                    <h3 class="newsletter-title">Elul-Tishrei 5784</h3>
+                                    <h3 class="newsletter-title">Elul-Tishrei</h3>
                                     <p class="newsletter-date">Previous Edition</p>
                                     <a href="files/ElulTishrei Newsletter.pdf" class="btn btn-primary newsletter-btn"
                                         download>
@@ -283,12 +309,20 @@
                             </div>
                         </div>
                     </div>
-                    <button class="carousel-button next" id="nextNewsletter">
-                        <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
-                            fill="none">
-                            <path d="M9 18l6-6-6-6" />
-                        </svg>
-                    </button>
+                    <div class="carousel-controls">
+                        <button class="carousel-button prev" id="prevNewsletter">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none">
+                                <path d="M15 18l-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <button class="carousel-button next" id="nextNewsletter">
+                            <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2"
+                                fill="none">
+                                <path d="M9 18l6-6-6-6" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
