@@ -380,11 +380,103 @@ document.addEventListener('click', function (e) {
     const link = e.target.closest('a.pdf-view');
     if (!link) return;
     e.preventDefault();
-    const url = link.getAttribute('href');
+
+    const imagesFolder = link.dataset.imagesFolder;
+    const pages = link.dataset.pages;
     const title = link.dataset.title || 'Newsletter';
-    if (url) showPdfModal(url, title);
+
+    if (imagesFolder && pages) {
+        const imageUrls = [];
+        const pageCount = parseInt(pages);
+        for (let i = 1; i <= pageCount; i++) {
+            imageUrls.push(`${imagesFolder}Page ${i}.jpeg`);
+        }
+        showImagesModal(imageUrls, title);
+    } else {
+        const url = link.getAttribute('href');
+        if (url) showPdfModal(url, title);
+    }
 });
-// (PDF modal implementation is defined below)
+
+function showImagesModal(imageUrls, title) {
+    // Create modal overlay and structure
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.setAttribute('role', 'dialog');
+    if (title) modal.setAttribute('aria-label', `Image preview: ${title}`);
+
+    const content = document.createElement('div');
+    content.className = 'pdf-modal-content'; // Reuse existing styles
+
+    const header = document.createElement('div');
+    header.className = 'pdf-modal-header';
+
+    const nav = document.createElement('div');
+    nav.className = 'pdf-nav';
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'pdf-nav-button';
+    prevBtn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M15 18l-6-6 6-6"/></svg>';
+    const pageIndicator = document.createElement('div');
+    pageIndicator.className = 'pdf-page-indicator';
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pdf-nav-button';
+    nextBtn.innerHTML = '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none"><path d="M9 18l6-6-6-6"/></svg>';
+    nav.appendChild(prevBtn);
+    nav.appendChild(pageIndicator);
+    nav.appendChild(nextBtn);
+
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'pdf-close-btn';
+    closeBtn.innerHTML = '&times;';
+    header.appendChild(nav);
+    header.appendChild(closeBtn);
+
+    const imageContainer = document.createElement('div');
+    imageContainer.className = 'pdf-canvas-container';
+    const img = document.createElement('img');
+    img.className = 'preview-image-full';
+    img.style.maxWidth = '100%';
+    img.style.height = 'auto';
+    img.style.display = 'block';
+    img.style.margin = '0 auto';
+    imageContainer.appendChild(img);
+
+    content.appendChild(header);
+    content.appendChild(imageContainer);
+    modal.appendChild(content);
+    document.body.appendChild(modal);
+    document.body.style.overflow = 'hidden';
+
+    let currentIndex = 0;
+    const totalPages = imageUrls.length;
+
+    function updateImage() {
+        img.src = imageUrls[currentIndex];
+        pageIndicator.textContent = (currentIndex + 1) + ' / ' + totalPages;
+        prevBtn.disabled = currentIndex <= 0;
+        nextBtn.disabled = currentIndex >= totalPages - 1;
+    }
+
+    function cleanup() {
+        if (modal && modal.parentNode) modal.parentNode.removeChild(modal);
+        document.body.style.overflow = '';
+        document.removeEventListener('keydown', onKey);
+    }
+
+    function onKey(e) {
+        if (e.key === 'Escape') cleanup();
+        if (e.key === 'ArrowRight') { if (currentIndex < totalPages - 1) { currentIndex++; updateImage(); } }
+        if (e.key === 'ArrowLeft') { if (currentIndex > 0) { currentIndex--; updateImage(); } }
+    }
+
+    prevBtn.addEventListener('click', (e) => { e.preventDefault(); if (currentIndex > 0) { currentIndex--; updateImage(); } });
+    nextBtn.addEventListener('click', (e) => { e.preventDefault(); if (currentIndex < totalPages - 1) { currentIndex++; updateImage(); } });
+    closeBtn.addEventListener('click', cleanup);
+    modal.addEventListener('click', (e) => { if (e.target === modal) cleanup(); });
+    document.addEventListener('keydown', onKey);
+
+    updateImage();
+}
 
 function showPdfModal(url, title) {
     // Ensure Font Awesome is loaded (icons already referenced in CSS too)
